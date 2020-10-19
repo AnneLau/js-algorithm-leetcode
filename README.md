@@ -23,7 +23,7 @@ JavaScript 实现数据结构与算法
 
 **示例 1：**
 
-```
+```js
 输入：
 ["RecentCounter", "ping", "ping", "ping", "ping"]
 [[], [1], [100], [3001], [3002]]
@@ -92,7 +92,7 @@ RecentCounter.prototype.ping = function(t) {
 
 **示例 1：**
 
-```
+```js
 输入：head = [4,5,1,9], node = 5
 输出：[4,1,9]
 解释：给定你链表中值为 5 的第二个节点，那么在调用了你的函数之后，该链表应变为 4 -> 1 -> 9.
@@ -100,7 +100,7 @@ RecentCounter.prototype.ping = function(t) {
 
 **示例 2：**
 
-```
+```js
 输入：head = [4,5,1,9], node = 1
 输出：[4,5,9]
 解释：给定你链表中值为 1 的第三个节点，那么在调用了你的函数之后，该链表应变为 4 -> 5 -> 9.
@@ -149,7 +149,7 @@ var deleteNode = function(node) {
 
 **示例:**
 
-```
+```js
 输入: 1->2->3->4->5->NULL
 输出: 5->4->3->2->1->NULL
 ```
@@ -202,7 +202,7 @@ var reverseList = function(head) {
 
 **示例：**
 
-```
+```js
 输入：(2 -> 4 -> 3) + (5 -> 6 -> 4)
 输出：7 -> 0 -> 8
 原因：342 + 465 = 807
@@ -260,14 +260,14 @@ var addTwoNumbers = function(l1, l2) {
 
 **示例 1:**
 
-```
+```js
 输入: 1->1->2
 输出: 1->2
 ```
 
 **示例 2:**
 
-```
+```js
 输入: 1->1->2->3->3
 输出: 1->2->3
 ```
@@ -325,7 +325,7 @@ var deleteDuplicates = function(head) {
 
 ![img](https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2018/12/07/circularlinkedlist.png)
 
-```
+```js
 输入：head = [3,2,0,-4], pos = 1
 输出：true
 解释：链表中有一个环，其尾部连接到第二个节点。
@@ -335,7 +335,7 @@ var deleteDuplicates = function(head) {
 
 ![img](https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2018/12/07/circularlinkedlist_test2.png)
 
-```
+```js
 输入：head = [1,2], pos = 0
 输出：true
 解释：链表中有一个环，其尾部连接到第一个节点。
@@ -345,7 +345,7 @@ var deleteDuplicates = function(head) {
 
 ![img](https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2018/12/07/circularlinkedlist_test3.png)
 
-```
+```js
 输入：head = [1], pos = -1
 输出：false
 解释：链表中没有环。
@@ -471,35 +471,35 @@ var intersection = function(nums1, nums2) {
 
 **示例 1:**
 
-```
+```js
 输入: "()"
 输出: true
 ```
 
 **示例 2:**
 
-```
+```js
 输入: "()[]{}"
 输出: true
 ```
 
 **示例 3:**
 
-```
+```js
 输入: "(]"
 输出: false
 ```
 
 **示例 4:**
 
-```
+```js
 输入: "([)]"
 输出: false
 ```
 
 **示例 5:**
 
-```
+```js
 输入: "{[]}"
 输出: true
 ```
@@ -615,7 +615,7 @@ var twoSum = function(nums, target) {
 
 **示例 1:**
 
-```
+```js
 输入: "abcabcbb"
 输出: 3 
 解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
@@ -623,7 +623,7 @@ var twoSum = function(nums, target) {
 
 **示例 2:**
 
-```
+```js
 输入: "bbbbb"
 输出: 1
 解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。
@@ -631,7 +631,7 @@ var twoSum = function(nums, target) {
 
 **示例 3:**
 
-```
+```js
 输入: "pwwkew"
 输出: 3
 解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
@@ -674,7 +674,7 @@ var lengthOfLongestSubstring = function(s) {
 
 **示例：**
 
-```
+```js
 输入：S = "ADOBECODEBANC", T = "ABC"
 输出："BANC"
 ```
@@ -724,6 +724,182 @@ var minWindow = function(s, t) {
             l += 1;
         }
         r++;
+    }
+    return res;
+};
+```
+
+## [104. 二叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
+
+难度简单721收藏分享切换为英文接收动态反馈
+
+给定一个二叉树，找出其最大深度。
+
+二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
+
+**说明:** 叶子节点是指没有子节点的节点。
+
+**示例：**
+给定二叉树 `[3,9,20,null,null,15,7]`，
+
+```js
+    3
+   / \
+  9  20
+    /  \
+   15   7
+```
+
+返回它的最大深度 3 。
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function(root) {
+    let res = 0;
+    const dfs = (n, l) => {
+        if (!n) { return }
+        if (!n.left && !n.right) {
+            res = Math.max(res, l)
+        }
+        dfs(n.left, l + 1);
+        dfs(n.right,l + 1);
+    };
+    dfs(root, 1);
+    return res;
+};
+```
+
+
+
+## [111. 二叉树的最小深度](https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/)
+
+难度简单383收藏分享切换为英文接收动态反馈
+
+给定一个二叉树，找出其最小深度。
+
+最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
+
+**说明:** 叶子节点是指没有子节点的节点。
+
+**示例:**
+
+给定二叉树 `[3,9,20,null,null,15,7]`,
+
+```js
+    3
+   / \
+  9  20
+    /  \
+   15   7
+```
+
+返回它的最小深度  2.
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var minDepth = function(root) {
+    if (!root) {
+        return 0;
+    }
+    const q = [[root, 1]];
+    while (q.length) {
+        const [n, l] = q.shift();
+        if (!n.left && !n.right) {
+            return l;
+        }
+        if (n.left) {
+            q.push([n.left,l + 1]);
+        }
+        if (n.right) {
+            q.push([n.right,l + 1]);
+        }
+    }
+}
+```
+
+
+
+## [102. 二叉树的层序遍历](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/)
+
+难度中等671收藏分享切换为英文接收动态反馈
+
+给你一个二叉树，请你返回其按 **层序遍历** 得到的节点值。 （即逐层地，从左到右访问所有节点）。
+
+ 
+
+**示例：**
+二叉树：`[3,9,20,null,null,15,7]`,
+
+```js
+    3
+   / \
+  9  20
+    /  \
+   15   7
+```
+
+返回其层次遍历结果：
+
+```js
+[
+  [3],
+  [9,20],
+  [15,7]
+]
+```
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var levelOrder = function(root) {
+    if (!root) {
+        return [];
+    } 
+    const q = [[root, 0]];
+    const res = [];
+    while (q.length) {
+        const [n, level] = q.shift();
+        if (!res[level]) {
+            res.push([n.val]);
+        } else {
+            res[level].push(n.val)
+        }
+        if (n.left) {
+            q.push([n.left, level + 1]);
+        }
+        if (n.right) {
+            q.push([n.right, level + 1]);
+        }
     }
     return res;
 };
