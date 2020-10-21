@@ -1,3 +1,5 @@
+
+
 # js-algorithm
 
 JavaScript 实现数据结构与算法
@@ -1090,3 +1092,14 @@ var hasPathSum = function(root, sum) {
 };
 ```
 
+
+
+## 前端与树
+
+![image-20201021154340737](README.assets/image-20201021154340737.png)
+
+!(README.assets/image-20201021154244543.png)
+
+![image-20201021154515935](README.assets/image-20201021154515935.png)
+
+![](README.assets/image-20201021154244543.png)
