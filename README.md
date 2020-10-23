@@ -1184,3 +1184,120 @@ var isNumber = function(s) {
 };
 ```
 
+
+
+
+
+## [417. 太平洋大西洋水流问题](https://leetcode-cn.com/problems/pacific-atlantic-water-flow/)
+
+难度中等162收藏分享切换为英文接收动态反馈
+
+给定一个 `m x n` 的非负整数矩阵来表示一片大陆上各个单元格的高度。“太平洋”处于大陆的左边界和上边界，而“大西洋”处于大陆的右边界和下边界。
+
+规定水流只能按照上、下、左、右四个方向流动，且只能从高到低或者在同等高度上流动。
+
+请找出那些水流既可以流动到“太平洋”，又能流动到“大西洋”的陆地单元的坐标。
+
+ 
+
+**提示：**
+
+1. 输出坐标的顺序不重要
+2. *m* 和 *n* 都小于150
+
+ 
+
+**示例：**
+
+ 
+
+```js
+给定下面的 5x5 矩阵:
+
+  太平洋 ~   ~   ~   ~   ~ 
+       ~  1   2   2   3  (5) *
+       ~  3   2   3  (4) (4) *
+       ~  2   4  (5)  3   1  *
+       ~ (6) (7)  1   4   5  *
+       ~ (5)  1   1   2   4  *
+          *   *   *   *   * 大西洋
+
+返回:
+
+[[0, 4], [1, 3], [1, 4], [2, 2], [3, 0], [3, 1], [4, 0]] (上图中带括号的单元).
+```
+
+ 
+
+通过次数12,543
+
+提交次数28,983
+
+```js
+/**
+ * @param {number[][]} matrix
+ * @return {number[][]}
+ */
+
+var pacificAtlantic = function(matrix) {
+    // 矩阵无值或不是二维
+    if (!matrix || !matrix[0]) return [];
+    
+    const row = matrix.length;
+    const column = matrix[0].length;
+
+    // 记录能流到太平洋的坐标
+    const flowT = Array.from({length: row}, () => new Array(column).fill(false));
+    // 记录能流到大西洋的坐标
+    const flowD = Array.from({length: row}, () => {
+        return new Array(column).fill(false);
+    });
+    // console.log(row,column,flowT,flowD);
+
+    // 深度优先遍历 (r,c) 当前节点的坐标 flow：flowT/flowD
+    const dfs = (r, c, flow) => {
+        flow[r][c] = true;
+        // 遍历相邻节点，上下左右四个节点
+        [[r-1,c],[r+1,c],[r,c-1],[r,c+1]].forEach(([nextR,nextC]) => {
+            if(
+                // 保证节点在矩阵中
+                nextR >= 0 && nextR < row &&
+                nextC >= 0 && nextC < column &&
+                // 防止死循环，保证之前没访问该节点
+                !flow[nextR][nextC] && 
+                // 保证逆流而上
+                matrix[nextR][nextC] >= matrix[r][c]
+            ){
+                dfs(nextR, nextC, flow);
+            }
+        });
+    };
+
+    //  沿着海岸线逆流而上
+    for(let i = 0; i < row; i++){
+        // 第1列
+        dfs(i, 0, flowT);
+        // 最后1列
+        dfs(i, column - 1, flowD);
+    }
+    for(let j = 0; j < column; j++){
+        // 第一行
+        dfs(0, j, flowT);
+        // 最后一行
+        dfs(row - 1, j, flowD);
+    }
+
+    // 收集能流到两个大洋的坐标 
+    const res = [];
+    for (let r = 0; r < row; r++){
+        for(let c = 0; c < column; c++){
+            if(flowT[r][c] && flowD[r][c]){
+                res.push([r,c]);
+            }
+        }
+    }
+    return res;
+};
+
+```
+
