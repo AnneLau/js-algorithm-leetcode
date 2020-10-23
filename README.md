@@ -1444,3 +1444,104 @@ var cloneGraph = function(node) {
 };
 ```
 
+
+
+## [215. 数组中的第K个最大元素](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/)
+
+难度中等753
+
+在未排序的数组中找到第 **k** 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
+
+**示例 1:**
+
+```js
+输入: [3,2,1,5,6,4] 和 k = 2
+输出: 5
+```
+
+**示例 2:**
+
+```js
+输入: [3,2,3,1,2,4,5,5,6] 和 k = 4
+输出: 4
+```
+
+**说明:**
+
+你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。
+
+通过次数214,696
+
+提交次数333,381
+
+```js
+class MinHeap {
+        constructor() {
+            this.heap = [];
+        }
+        swap(i1, i2) {
+            const temp = this.heap[i1];
+            this.heap[i1] = this.heap[i2];
+            this.heap[i2] = temp;
+        }
+        getParentIndex(i) {
+            return (i - 1) >> 1;
+        }
+        getLeftIndex(i) {
+            return i * 2 + 1;
+        }
+        getRightIndex(i) {
+            return i * 2 + 2;
+        }
+        shiftUp(index) {
+            if (index == 0) { return }
+            const parentIndex = this.getParentIndex(index);
+            if (this.heap[parentIndex] > this.heap[index]) {
+                this.swap(parentIndex, index);
+                this.shiftUp(parentIndex)
+            }
+        }
+        shiftDown(index) {
+            const leftIndex = this.getLeftIndex(index);
+            const rightIndex = this.getRightIndex(index);
+            if (this.heap[leftIndex] < this.heap[index]) {
+                this.swap(leftIndex, index);
+                this.shiftDown(leftIndex)
+            }
+            if (this.heap[rightIndex] < this.heap[index]) {
+                this.swap(rightIndex, index);
+                this.shiftDown(rightIndex)
+            }
+        }
+        insert(value) {
+            this.heap.push(value);
+            this.shiftUp(this.heap.length - 1);
+        }
+        pop() {
+            this.heap[0] = this.heap.pop();
+            this.shiftDown(0);
+        }
+        peek() {
+            return this.heap[0];
+        }
+        size() {
+            return this.heap.length;
+        }
+    }
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var findKthLargest = function(nums, k) {
+    const h = new MinHeap();
+    nums.forEach(n => {
+        h.insert(n);
+        if(h.size() > k) {
+            h.pop();
+        }
+    })
+    return h.peek();
+};
+```
+
