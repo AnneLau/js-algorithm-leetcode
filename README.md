@@ -2192,3 +2192,58 @@ var guessNumber = function (n) {
 }
 ```
 
+## [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)(分而治之)
+
+难度简单667
+
+翻转一棵二叉树。
+
+**示例：**
+
+输入：
+
+```js
+     4
+   /   \
+  2     7
+ / \   / \
+1   3 6   9
+```
+
+输出：
+
+```js
+     4
+   /   \
+  7     2
+ / \   / \
+9   6 3   1
+```
+
+**备注:**
+这个问题是受到 [Max Howell ](https://twitter.com/mxcl)的 [原问题](https://twitter.com/mxcl/status/608682016205344768) 启发的 ：
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var invertTree = function (root) {
+    if (!root) {
+        return null;
+    }
+    return {
+        val: root.val,
+        left: invertTree(root.right),
+        right: invertTree(root.left),
+    }
+};
+```
+
