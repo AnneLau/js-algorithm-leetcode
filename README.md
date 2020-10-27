@@ -2687,7 +2687,7 @@ var maxProfit = function (prices) {
 };
 ```
 
-## [46. 全排列](https://leetcode-cn.com/problems/permutations/)
+## [46. 全排列(回溯算法)](https://leetcode-cn.com/problems/permutations/)
 
 难度中等962
 
