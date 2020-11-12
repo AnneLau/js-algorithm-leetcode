@@ -2792,3 +2792,82 @@ var subsets = function (nums) {
 };
 ```
 
+
+
+## [79. 单词搜索](https://leetcode-cn.com/problems/word-search/)给定一个二维网格和一个单词，找出该单词是否存在于网格中。
+
+单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。
+
+ 
+
+示例:
+
+board =
+[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+]
+
+给定 word = "ABCCED", 返回 true
+给定 word = "SEE", 返回 true
+给定 word = "ABCB", 返回 false
+
+
+提示：
+
+board 和 word 中只包含大写和小写英文字母。
+
+1 <= board.length <= 200
+1 <= board[i].length <= 200
+1 <= word.length <= 10^3
+通过次数119,042提交次数272,268
+
+
+
+
+
+```js
+/**
+ * @param {character[][]} board
+ * @param {string} word
+ * @return {boolean}
+ */
+var exist = function (board, word) {
+    // 判断⼀些边界条件
+    if (board.length === 0) return false
+    if (word.length === 0) return true
+    const row = board.length
+    const col = board[0].length
+    // 每个字⺟都可以是起点
+    for (let i = 0; i < row; i++) {
+        for (let j = 0; j < col; j++) {
+            const ret = find(i, j, 0)
+            if (ret) return true
+        }
+    }
+    return false
+    function find(i, j, cur) {
+        //越界
+        if (i >= row || i < 0) return false
+        if (j >= col || j < 0) return false
+        const letter = board[i][j]
+        // 终⽌条件
+        if (letter !== word[cur]) return false
+        // 找到最后⼀个了
+        if (cur == word.length - 1) return true
+        // 找下⼀步
+        // 设置标记
+        board[i][j] = null
+        // 递归 怎么找下⼀步
+        const ret = find(i + 1, j, cur + 1) ||
+            find(i - 1, j, cur + 1) ||
+            find(i, j + 1, cur + 1) ||
+            find(i, j - 1, cur + 1)
+        // 取消标记 进⾏别的路线查找
+        board[i][j] = letter
+        return ret
+    }
+};
+```
+
